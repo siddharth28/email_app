@@ -23,4 +23,7 @@ class Email < ActiveRecord::Base
     def add_default_subject
       self.subject = 'Default Subject' if !subject.present?
     end
+    def log_data
+      Log.create(sender: sender.id, receiver_count: receivers.length)
+    end
 end
