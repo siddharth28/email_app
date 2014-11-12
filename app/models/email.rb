@@ -1,6 +1,6 @@
 class Email < ActiveRecord::Base
   has_many :receivers
-  has_many :receiver_mailbox, through: 'receiver', source: 'mailbox'
+  has_many :receiver_mailbox, through: :receivers, source: :mailbox
   # FIXED
   # FIXME_AK: do we need the preserve the attachments when Email is removeD?
   has_many :attachments, dependent: :destroy
