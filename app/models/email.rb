@@ -9,13 +9,13 @@ class Email < ActiveRecord::Base
   belongs_to :sender, class_name: MailBox
   # FIXED
   # FIXME_AK: do we need the delegate here?
-  validates :maximum_receivers
+  validate :maximum_receivers
   before_create :check_spam, :add_default_subject
   after_create :log_data
 
   protected
     def maximum_receivers
-      receivers.length =< 20
+      errors.add(:receivers, 'maximum receivers can be 20') if receivers.length > 20
     end
     def check_spam
       self.spam = true if attachments.texts.any?
